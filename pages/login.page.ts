@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 import { UserData } from '../models/user.model';
 
 export class LoginPage {
@@ -24,5 +24,10 @@ export class LoginPage {
     await this.usernameInput.fill(user.username);
     await this.passwordInput.fill(user.password);
     await this.loginButton.click();
+  }
+
+  async expectErrorMessage(expectedText: string) {
+    await expect(this.errorMessage).toBeVisible();
+    await expect(this.errorMessage).toContainText(expectedText);
   }
 }

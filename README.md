@@ -44,6 +44,20 @@ models/                # TypeScript interfaces
 utils/                 # Helpers (e.g., currency parsing)
 .github/workflows/     # CI/CD Pipeline configuration
 ```
+## 💡 Why this architecture? (Business Value)
+
+This project is not just about clicking buttons; it demonstrates a mature approach to Quality Assurance engineering:
+
+1.  **Separation of Concerns:** Test intent ("User buys a bag") is separated from implementation ("Click div #id-123"). This means UI changes don't break the logic of the test, only the page object locator.
+2.  **Scalability:** The use of **Fixtures** means we can scale to hundreds of tests without duplicating setup code (`beforeEach` hell).
+3.  **Flakiness Resistance:** Custom retry strategies and Playwright's auto-waiting mechanisms ensure that CI builds stay green unless there is a real bug.
+4.  **Type Safety:** TypeScript interfaces (`User.model.ts`) ensure that we never pass invalid data structures to our tests, catching errors at compile time, not runtime.
+
+### 🚫 Why NOT BDD (Cucumber/Gherkin)?
+While BDD is popular, this project consciously chooses **pure TypeScript** because:
+* **Complexity:** Gherkin adds an extra layer of abstraction (Regex matching steps) that complicates debugging.
+* **Speed:** Direct code execution is faster and easier to trace than parsing `.feature` files.
+* **Target Audience:** For this specific project, the goal is technical excellence and maintainability for SDETs, rather than creating non-technical documentation for Product Owners.
 
 ## 🛠️ Tech Stack
 * Core: Playwright + TypeScript

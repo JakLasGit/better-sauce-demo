@@ -13,4 +13,8 @@ export class UserFactory {
   static createPerformanceGlitchUser(): UserData {
     return new UserBuilder().asPerformanceGlitchUser().build();
   }
+
+  static createInvalidUser(): UserData {
+    return new UserBuilder().asInvalidUser().build()
+  }
 }

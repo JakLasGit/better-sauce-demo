@@ -23,6 +23,13 @@ export class UserBuilder {
     return this;
   }
 
+  asInvalidUser(): this {
+    this.user.username = 'standard_user';
+    this.user.password = 'wrong_password'
+    this.user.role = 'invalid_user';
+    return this
+  }
+
   build(): UserData {
     return this.user;
   }
