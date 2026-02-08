@@ -30,6 +30,10 @@ jobs:
       
     - name: Run Playwright tests
       run: npx playwright test
+      env:
+        # Przekazujemy sekret z GitHuba do zmiennej środowiskowej runnera
+        SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
+        BASE_URL: https://www.saucedemo.com
       
     # Żeby można było pobrać ZIP-a ręcznie w Artifacts
     - uses: actions/upload-artifact@v4
@@ -47,7 +51,6 @@ jobs:
 
   # Job do publikacji
   deploy-report:
-    # Uruchom tylko jeśli jesteśmy na branchu main (żeby nie publikować z PR-ów)
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     needs: test
     runs-on: ubuntu-latest
