@@ -7,6 +7,7 @@ readonly page: Page;
   readonly inventoryItemPrice: Locator;
   readonly headerTitle: Locator;
   readonly goToCartButton: Locator;
+  readonly cartIconBadge: Locator;
 
 
   constructor(page: Page) {
@@ -15,6 +16,7 @@ readonly page: Page;
     this.inventoryItemPrice = page.locator('.inventory_item_price');
     this.headerTitle = page.getByTestId('title')
     this.goToCartButton = page.getByTestId('shopping-cart-link')
+    this.cartIconBadge = page.getByTestId('shopping-cart-badge')
   }
 
   async sortBy(option: 'lohi' | 'hilo' | 'az' | 'za') {
@@ -28,8 +30,15 @@ readonly page: Page;
   }
 
   async addProductToCart(productName: string) {
-      const productButton = this.page.locator(`div.inventory_item:has-text("${productName}") button`);
-      await productButton.click();
+      const productContainer = this.page.locator('.inventory_item').filter({ hasText: productName });
+      const addButton = productContainer.getByRole('button', { name: 'Add to cart' });
+      await addButton.click();
+  }
+
+  async removeProduct(productName: string) {
+      const productContainer = this.page.locator('.inventory_item').filter({ hasText: productName });
+      const removeButton = productContainer.getByRole('button', { name: 'Remove' });
+      await removeButton.click();
   }
 
   async goToCart() {

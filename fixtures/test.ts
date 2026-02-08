@@ -4,6 +4,7 @@ import { InventoryPage } from '../pages/inventory.page.ts';
 import { CartPage } from '../pages/cart.page.ts';
 import { CheckoutStepOnePage } from '../pages/checkout-step-one.page.ts';
 import { CheckoutStepTwoPage } from '../pages/checkout-step-two.page.ts';
+import { SuccessPage } from '../pages/success.page.ts';
 
 type LoginFunction = (username: string) => Promise<void>;
 
@@ -13,6 +14,7 @@ type MyFixtures = {
   cartPage: CartPage;
   checkoutStepOnePage: CheckoutStepOnePage
   checkoutStepTwoPage: CheckoutStepTwoPage
+  successPage: SuccessPage
   loginViaCookies: LoginFunction;
 };
 
@@ -31,6 +33,9 @@ export const test = base.extend<MyFixtures>({
   },
   checkoutStepTwoPage: async ({ page }, use) => {
     await use(new CheckoutStepTwoPage(page));
+  },
+  successPage: async ({ page }, use) => {
+    await use(new SuccessPage(page));
   },
 
   loginViaCookies: async ({ page, baseURL }, use) => {

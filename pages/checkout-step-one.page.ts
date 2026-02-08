@@ -7,6 +7,8 @@ export class CheckoutStepOnePage {
   readonly lastName: Locator;
   readonly postalCode: Locator;
   readonly continueToCheckoutStepTwoButton: Locator;
+  readonly error: Locator;
+  
 
   constructor(page: Page) {
     this.page = page;
@@ -15,6 +17,7 @@ export class CheckoutStepOnePage {
     this.lastName = page.getByTestId('lastName');
     this.postalCode = page.getByTestId('postalCode');
     this.continueToCheckoutStepTwoButton = page.getByTestId('continue');
+    this.error = page.getByTestId('error');
   }
 
   async fillContactDetails(firstName: string, lastName: string, postalCode: string) {
