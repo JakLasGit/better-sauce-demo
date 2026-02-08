@@ -2,35 +2,49 @@ import { test, expect } from '../../../fixtures/test';
 import { UserFactory } from '../../../factories/user.factory';
 
 test.describe('Inventory Sorting', () => {
-  
   test('User can sort products by Price (low to high)', async ({ loginPage, inventoryPage }) => {
-    // 1. Arrange
-    const user = UserFactory.createStandardUser();
-    await loginPage.goto();
-    await loginPage.login(user);
+    await test.step('Login as standard user', async () => {
+      const user = UserFactory.createStandardUser();
+      await loginPage.goto();
+      await loginPage.login(user);
+    });
 
-    // 2. Act
-    await inventoryPage.sortBy('lohi');
+    await test.step('Sort items by Price (low to high)', async () => {
+      await inventoryPage.sortBy('lohi');
+    });
 
-    // 3. Assert
-    const prices = await inventoryPage.getAllProductPrices();
+    await test.step('Verify items are sorted in ascending order', async () => {
+      const prices = await inventoryPage.getAllProductPrices();
 
-    const sortedPrices = [...prices].sort((a, b) => a - b);
+      // Tworzymy kopię tablicy i sortujemy ją "idealnie" w kodzie (a - b)
+      const sortedPrices = [...prices].sort((a, b) => a - b);
 
-    console.log('UI Prices:', prices);
-    console.log('Expected:', sortedPrices);
+      console.log('UI Prices:', prices);
+      console.log('Expected:', sortedPrices);
 
-    expect(prices).toEqual(sortedPrices);
+      expect(prices).toEqual(sortedPrices);
+    });
   });
 
-    test('User logged through cookie can sort products by Price (high to low)', async ({ inventoryPage, loginViaCookies }) => {
-    await loginViaCookies('standard_user')
+  test('User logged through cookie can sort products by Price (high to low)', async ({
+    inventoryPage,
+    loginViaCookies,
+  }) => {
+    await test.step('Login via cookies', async () => {
+      await loginViaCookies('standard_user');
+    });
 
-    await inventoryPage.sortBy('hilo');
+    await test.step('Sort items by Price (high to low)', async () => {
+      await inventoryPage.sortBy('hilo');
+    });
 
-    const prices = await inventoryPage.getAllProductPrices();
-    const sortedPrices = [...prices].sort((a, b) => b - a); // Odwrócone sortowanie
+    await test.step('Verify items are sorted in descending order', async () => {
+      const prices = await inventoryPage.getAllProductPrices();
 
-    expect(prices).toEqual(sortedPrices);
+      // Sortowanie malejące (b - a)
+      const sortedPrices = [...prices].sort((a, b) => b - a);
+
+      expect(prices).toEqual(sortedPrices);
+    });
   });
 });
