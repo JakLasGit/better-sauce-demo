@@ -22,9 +22,16 @@ test.describe('Authentication', () => {
   test('Locked out user sees error message', async ({ loginPage }) => {
     const lockedUser = UserFactory.createLockedUser();
 
-    await loginPage.goto();
-    await loginPage.login(lockedUser);
+    await test.step('Navigate to Login Page', async () => {
+      await loginPage.goto();
+    });
 
-    await expect(loginPage.errorMessage).toContainText('Sorry, this user has been locked out.');
+    await test.step('Perform Login On Locked Out User', async () => {
+      await loginPage.login(lockedUser);
+    });
+
+    await test.step('Verify Locked User Error Message', async () => {
+      await expect(loginPage.errorMessage).toContainText('Sorry, this user has been locked out.');
+    });
   });
 });

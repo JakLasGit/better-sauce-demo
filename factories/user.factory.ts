@@ -10,10 +10,6 @@ export class UserFactory {
     return new UserBuilder().asLockedOut().build();
   }
 
-  static createProblemUser(): UserData {
-    return new UserBuilder().asProblemUser().build();
-  }
-
   static createPerformanceGlitchUser(): UserData {
     return new UserBuilder().asPerformanceGlitchUser().build();
   }
