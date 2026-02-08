@@ -22,7 +22,7 @@ The framework relies on strong typing and separation of concerns:
 | Pattern | Usage in Project |
 |:---|:---|
 | **Page Object Model (POM)** | Encapsulates page locators and interactions (`pages/`). Tests read like business requirements. |
-| **Test Fixtures** | Dependency injection for Pages and Users. No more `beforeEach` boilerplate (`fixtures/test.ts`). |
+| **Test Fixtures** | Dependency injection for Pages and Users. |
 | **Factory Pattern** | Centralized creation of test data (`UserFactory.createStandardUser()`). Simplifies test setup. |
 | **Builder Pattern** | Fluent interface for constructing complex data objects (`UserBuilder.setUsername()...`). |
 | **DTO (Data Transfer Object)** | Strictly typed interfaces for models (`models/user.model.ts`). |
@@ -43,3 +43,65 @@ builders/              # Flexible data generators
 models/                # TypeScript interfaces
 utils/                 # Helpers (e.g., currency parsing)
 .github/workflows/     # CI/CD Pipeline configuration
+```
+
+## 🛠️ Tech Stack
+* Core: Playwright + TypeScript
+
+* Assertion Engine: Jest Expect (built-in Playwright assertions)
+
+* CI/CD: GitHub Actions (runs on Ubuntu-latest)
+
+* Reporting: Playwright HTML Report & Traces
+
+## 🧪 Scenarios Covered
+The test suite covers critical business logic, going beyond simple "happy paths":
+
+1.  Money Maker Flow (E2E): Full checkout process validation.
+
+2.  Financial Integrity: Validates if Item Total + Tax exactly matches Total (handling JS floating-point precision issues).
+
+3.  Inventory Sorting: Verifies algorithm correctness for "Price: Low to High" and others.
+
+4.  Negative Testing: Validates form constraints and error handling logic.
+
+5.  Performance Handling: Ensures stability for performance_glitch_user without flaky failures.
+
+6.  Security: Verifies that locked-out users cannot access the application.
+
+## 🏁 Getting Started
+Prerequisites
+* Node.js (v18 or higher)
+* npm
+
+Installation
+
+```
+git clone https://github.com/JakLasGit/better-sauce-demo.git
+cd better-sauce-demo
+npm install
+npx playwright install --with-deps
+```
+
+## Running Tests
+Run all tests in headless mode:
+```
+npx playwright test
+```
+
+Run tests with UI mode (interactive):
+```
+npx playwright test --ui
+```
+
+View the latest test report:
+```
+npx playwright show-report
+```
+
+## ⚙️ CI/CD Pipeline
+This project uses GitHub Actions to automatically run tests on every push and pull_request.
+* Workflow file: .github/workflows/playwright.yml
+* Artifacts: HTML Reports are automatically generated and attached to workflow runs.
+
+Created by Me :) as a showcase of capabilities.
