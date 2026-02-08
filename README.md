@@ -36,12 +36,15 @@ tests/
 │  ├─ checkout/        # Full purchase flows & financial calculations
 │  ├─ inventory/       # Sorting logic & product verification
 │  └─ performance/     # Handling 'glitch' users & timeouts
+├─ legacy/
+│  └─ spaghetti-code   # Test to show contrast
 pages/                 # Page Objects (locators & methods)
 fixtures/              # Playwright fixtures (DI container)
 factories/             # Predefined data sets (Standard, Locked, Glitch users)
 builders/              # Flexible data generators
 models/                # TypeScript interfaces
 utils/                 # Helpers (e.g., currency parsing)
+docs/adr               # Arhcitecture design document
 .github/workflows/     # CI/CD Pipeline configuration
 ```
 ## 💡 Why this architecture? (Business Value)
