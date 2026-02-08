@@ -2,7 +2,6 @@ import { test } from '../../../fixtures/test';
 import { UserFactory } from '../../../factories/user.factory';
 
 test.describe('Login Negative Scenarios', () => {
-  
   test('User cannot login with invalid password', async ({ loginPage }) => {
     const invalidUser = UserFactory.createInvalidUser();
 
@@ -13,7 +12,7 @@ test.describe('Login Negative Scenarios', () => {
     await test.step('Perform Login', async () => {
       await loginPage.login(invalidUser);
     });
-    
+
     //Custom Assertion!
     await test.step('Verify Inventory Page loaded', async () => {
       await loginPage.expectErrorMessage('Username and password do not match');
